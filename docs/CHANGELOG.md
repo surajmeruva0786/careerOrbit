@@ -64,6 +64,10 @@ only — the user sends messages themselves.
   board tokens (Palantir, Plaid, Lever, Carbon Health, Ro, Whoop).
   Verified live: 41 real, currently-open internship postings from
   Palantir alone.
+- **Step 8/28 — RSS career-feed poller.** `src/lib/sourcing/rss.ts`,
+  third ToS-safe source per PLAN.md §5.2. Parses public job-board RSS
+  feeds (We Work Remotely, curl-verified) with fast-xml-parser.
+  Verified live: 1 real, currently-open internship posting returned.
 
 ## 2026-08-11
 
