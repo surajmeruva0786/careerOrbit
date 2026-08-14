@@ -109,6 +109,10 @@ only — the user sends messages themselves.
   after ranking. Note: Vercel's exact cron-count limit on the Hobby
   plan is unconfirmed from here — if step 27's deploy hits it, crons
   will get consolidated then.
+- **Step 16/28 — Dashboard job list UI.** `/` (force-dynamic, never
+  statically prerendered) lists applications needing review sorted by
+  fit_score, plus a collapsed history section. `getApplicationsByStatus()`
+  joins jobs/rankings/resume_versions in one query.
 
 ## 2026-08-11
 
