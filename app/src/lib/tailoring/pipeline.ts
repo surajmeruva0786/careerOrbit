@@ -10,7 +10,7 @@ export type TailoringResult = {
 /**
  * Tailors a resume for every application still at status='ranked',
  * storing the result as a resume_versions row (diffed against the
- * base) and advancing the application to status='tailored'.
+ * base) and advancing the application to status='pending_review'.
  */
 export async function runTailoring(): Promise<TailoringResult> {
   const supabase = supabaseServer();
@@ -55,7 +55,7 @@ export async function runTailoring(): Promise<TailoringResult> {
 
       const { error: updateError } = await supabase
         .from("applications")
-        .update({ resume_version_id: version.id, status: "tailored" })
+        .update({ resume_version_id: version.id, status: "pending_review" })
         .eq("id", app.id);
       if (updateError) throw updateError;
 
