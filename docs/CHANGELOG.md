@@ -59,6 +59,11 @@ only — the user sends messages themselves.
   regex and re-verified: 16 real, currently-open internship postings
   returned live as of today. Company list lives in
   `src/lib/sourcing/companies.ts`, easy to extend.
+- **Step 7/28 — Lever sourcing connector.** `src/lib/sourcing/lever.ts`,
+  same pattern against the public Lever Postings API. 6 curl-verified
+  board tokens (Palantir, Plaid, Lever, Carbon Health, Ro, Whoop).
+  Verified live: 41 real, currently-open internship postings from
+  Palantir alone.
 
 ## 2026-08-11
 
