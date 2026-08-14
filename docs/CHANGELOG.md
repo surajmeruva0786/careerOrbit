@@ -95,6 +95,12 @@ only — the user sends messages themselves.
   `runRanking()`, scheduled 30 min after sourcing. Idempotent, so a
   Hobby-plan 60s timeout on a big backlog just means the next tick
   continues where the last one stopped.
+- **Step 14/28 — Resume tailoring generator.** `src/lib/tailoring/tailor.ts`
+  reorders/rewords real experience and projects for a specific posting.
+  `assertNoFabrication()` is a hard post-generation check — throws if
+  the model's output introduces an org/project name not present in the
+  base resume, enforcing the "never fabricate" rule in code rather than
+  trusting the prompt alone.
 
 ## 2026-08-11
 
