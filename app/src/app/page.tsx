@@ -6,14 +6,8 @@ export const dynamic = "force-dynamic";
 
 export default async function Dashboard() {
   const needsReview = await getApplicationsByStatus(["pending_review", "tailored", "ranked"]);
-  const history = await getApplicationsByStatus([
-    "approved",
-    "submitted",
-    "awaiting_reply",
-    "completed",
-    "rejected",
-    "skipped",
-  ]);
+  const awaitingReply = await getApplicationsByStatus(["awaiting_reply"]);
+  const history = await getApplicationsByStatus(["approved", "submitted", "completed", "rejected", "skipped"]);
 
   const sorted = [...needsReview].sort(
     (a, b) => (b.rankings?.fit_score ?? 0) - (a.rankings?.fit_score ?? 0)
@@ -38,6 +32,18 @@ export default async function Dashboard() {
             <ApplicationCard key={app.id} application={app} />
           ))}
         </section>
+
+        {awaitingReply.length > 0 && (
+          <section className="flex flex-col gap-3">
+            <h2 className="text-lg font-medium">Waiting on your reply ({awaitingReply.length})</h2>
+            <p className="text-sm opacity-60">
+              These need an answer emailed by you before they can be submitted — see docs/CHANGELOG.md step 22.
+            </p>
+            {awaitingReply.map((app) => (
+              <ApplicationCard key={app.id} application={app} />
+            ))}
+          </section>
+        )}
 
         {history.length > 0 && (
           <section className="flex flex-col gap-3">

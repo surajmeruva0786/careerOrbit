@@ -11,13 +11,15 @@ export type ApplicationRow = {
     content: { cover_note?: string; [k: string]: unknown };
     diff_from_base: unknown;
   } | null;
+  email_threads: { field_name: string; question: string; status: string }[];
 };
 
 const SELECT = `
   id, status, submission_method, created_at,
   jobs ( company, title, location, url ),
   rankings ( fit_score, friction_score, reasoning ),
-  resume_versions ( content, diff_from_base )
+  resume_versions ( content, diff_from_base ),
+  email_threads ( field_name, question, status )
 `;
 
 export async function getApplicationsByStatus(statuses: string[]): Promise<ApplicationRow[]> {
