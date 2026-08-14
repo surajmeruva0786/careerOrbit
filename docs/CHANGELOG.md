@@ -50,6 +50,15 @@ only — the user sends messages themselves.
   `docs/` and `app/`, and rewrote `app/README.md` with real setup
   steps (env vars, profile seeding, dev server) in place of the
   `create-next-app` boilerplate.
+- **Step 6/28 — Greenhouse sourcing connector.** `src/lib/sourcing/greenhouse.ts`
+  polls the public Greenhouse Job Board API for 17 curl-verified board
+  tokens (Anthropic, Stripe, Databricks, Scale AI, Coinbase, Figma,
+  MongoDB, GitLab, Cloudflare, and others), filtered to internship
+  postings. First filter pass (`/intern/i`) had false positives on
+  "International"/"Internal" job titles — fixed with a word-boundary
+  regex and re-verified: 16 real, currently-open internship postings
+  returned live as of today. Company list lives in
+  `src/lib/sourcing/companies.ts`, easy to extend.
 
 ## 2026-08-11
 
