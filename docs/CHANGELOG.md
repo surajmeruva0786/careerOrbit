@@ -127,6 +127,16 @@ only — the user sends messages themselves.
   wired to the `approveApplication`/`rejectApplication` server actions
   (which already existed in `app/actions.ts`, unwired). Only shown for
   applications still awaiting review; history items stay read-only.
+- **Step 19/28 — Submission worker, dry-run only.** `src/lib/submission/pipeline.ts`
+  builds the per-application submission payload (applicant fields,
+  tailored resume, target board/job parsed from `jobs.source_id`) for
+  everything at `status='approved'` and logs it via `/api/cron/submit`
+  — **no real POST to any ATS yet**. User chose this scope explicitly:
+  live Greenhouse/Lever API submission is the highest-stakes,
+  least-reversible action in the whole system (real application, real
+  company, user's name) and is deferred to its own later step rather
+  than folded in here. `submission_method` gets set so a payload isn't
+  rebuilt/relogged on every cron tick.
 
 ## 2026-08-11
 
