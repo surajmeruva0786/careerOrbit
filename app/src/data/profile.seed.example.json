@@ -1,0 +1,30 @@
+{
+  "full_name": "Your Name",
+  "email": "you@example.com",
+  "phone": "+1-555-0100",
+  "location": "City, Country",
+  "links": { "linkedin": "linkedin.com/in/you", "github": "github.com/you", "website": "" },
+  "education": [
+    { "institution": "University", "degree": "Degree", "detail": "GPA / percentile" }
+  ],
+  "experience": [
+    {
+      "title": "Role", "org": "Organization", "start": "2025-01", "end": "present",
+      "bullets": ["What you did, real and specific."],
+      "tags": ["domain-tag"]
+    }
+  ],
+  "projects": [
+    { "name": "Project Name", "bullets": ["What it does."], "tags": ["tag"] }
+  ],
+  "publications": [
+    { "title": "Paper Title", "status": "Submitted" }
+  ],
+  "skills": {
+    "languages": [], "frontend": [], "backend": [], "databases": [],
+    "vector_stores": [], "ai_ml": [], "tools": []
+  },
+  "awards": [],
+  "certifications": [],
+  "screening_answers": {}
+}

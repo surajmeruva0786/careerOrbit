@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# personal data - lives in Supabase, not in git (see profile.seed.example.json)
+src/data/profile.seed.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
