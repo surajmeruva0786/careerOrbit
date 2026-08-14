@@ -85,6 +85,12 @@ only — the user sends messages themselves.
   domain/seniority overlap, friction inferred only from posting
   language). Type-checks and builds clean; not yet run against the
   live API — needs `ANTHROPIC_API_KEY`.
+- **Step 12/28 — Ranking pipeline.** `src/lib/ranking/pipeline.ts`
+  scores every unranked job, stores every score, and promotes postings
+  at/above `RANKING_FIT_THRESHOLD` (default 55) into `applications`
+  (status `ranked`) — the volume control from PLAN.md §6. Added and
+  applied a unique `(job_id, profile_id)` constraint on `applications`
+  so reruns don't duplicate.
 
 ## 2026-08-11
 
