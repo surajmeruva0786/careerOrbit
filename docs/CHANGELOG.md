@@ -156,6 +156,27 @@ only — the user sends messages themselves.
   returns only questions the posting genuinely asks and isn't already
   answered — per PLAN.md §8, every outbound question must be real and
   specific, never a generic form dump. Not wired into a pipeline yet.
+- **Step 22/28 — Email Q&A ask/resolve loop.** `runEmailAsk()` queues
+  one `email_threads` row per unanswered question for every
+  `status='approved'` application (via `detectMissingFields()`) and
+  moves it to `awaiting_reply`; `resolveEmailAnswer()` writes a real
+  answer back permanently onto `profile.screening_answers`, records
+  it on `application_fields` (`source='user_email_reply'`), and
+  returns the application to `approved` once every open thread for it
+  is resolved. **Architecture note:** the deployed app deliberately
+  holds no Gmail credentials — a personal-inbox OAuth grant isn't
+  worth storing in a serverless app on a currently-public repo for a
+  single-user tool. `/api/cron/email-ask` only queues and returns the
+  question list; actually drafting/sending is PLAN.md §8 option (a) —
+  done by the operator (Claude Code, interactively or via a scheduled
+  run) using the Gmail MCP tools already available in this
+  environment, no extra provisioning needed. Replies are parsed by
+  the operator (free text is a judgment call, not something to
+  blind-automate) and POSTed to the new
+  `/api/admin/resolve-email-field` route, gated by the same
+  `CRON_SECRET` bearer token as the other cron routes. Scheduled
+  `email-ask` before `submit` in `vercel.json` so unanswered
+  applications don't reach the submission stage.
 
 ## 2026-08-11
 
