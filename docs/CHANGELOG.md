@@ -117,6 +117,16 @@ only — the user sends messages themselves.
   component shows per-entry bullet changes (struck-through before,
   highlighted after), reordering, and the generated cover note, so you
   can see exactly what changed before approving.
+- **Fixed a bug from step 15**: `runTailoring()` was advancing
+  applications to `status: "tailored"`, but the review dashboard's
+  approve/reject actions only ever look for `pending_review` — so
+  tailored applications reached the dashboard but couldn't actually be
+  actioned. Now sets `pending_review`.
+- **Step 18/28 — Approve/reject buttons.** `ApplicationCard` now
+  renders the two buttons as plain `<form action={...}>` submissions
+  wired to the `approveApplication`/`rejectApplication` server actions
+  (which already existed in `app/actions.ts`, unwired). Only shown for
+  applications still awaiting review; history items stay read-only.
 
 ## 2026-08-11
 
