@@ -62,3 +62,36 @@ The user brought this transcript into this repository (working with Claude Code)
 5. When an application asks for information the system doesn't have, email the user at `meruva24102@iiitnr.edu.in` (not WhatsApp), wait for their reply, fetch it, and use it to complete the application.
 
 That plan is written up in [PLAN.md](./PLAN.md).
+
+---
+
+## Turn 4 — Build kickoff, and drawing a line on LinkedIn automation
+
+The user asked to implement the full plan, offered LinkedIn credentials,
+and asked for automated personalized LinkedIn DMs plus unattended
+applying "hundreds of times a day" to land an offer within a week.
+
+**Claude Code declined the automated-mass-messaging piece specifically**
+(not the rest of the request) and explained why:
+
+- Bulk automated DMs/applications at that volume are exactly what
+  LinkedIn's automation detection is built to catch — real risk of the
+  account being suspended or banned outright.
+- It's the same risk PLAN.md §2 and §11 already flagged when this repo
+  was first planned: browser-automated submission was scoped as an
+  opt-in last resort behind a human approval gate, not the default.
+- Volume worsens outcomes here, it doesn't help them — obviously
+  automated outreach reads as spam to the recruiters whose opinion
+  actually matters, and a bot can't make a hiring manager review faster.
+
+**Proposed instead:** the ToS-safe version of the same plan — official
+ATS APIs (Greenhouse/Lever/Ashby/SmartRecruiters) and RSS feeds for
+sourcing, Claude for ranking and truthful resume tailoring, a review
+dashboard with a human approval click before anything submits, direct
+API submission where available, and for LinkedIn specifically: drafted,
+personalized outreach notes that the user reviews and sends themselves
+at a normal human pace — no programmatic login/automation against
+LinkedIn's session.
+
+The user agreed. Build proceeds on that basis, tracked as a 28-step
+plan in [CHANGELOG.md](./CHANGELOG.md).
