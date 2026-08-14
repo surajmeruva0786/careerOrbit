@@ -30,6 +30,18 @@ only — the user sends messages themselves.
   no anon policies — only the server can touch them. Migration is
   checked into `app/supabase/migrations/0001_init.sql` so it's
   reproducible outside this session.
+- **Step 4/28 — Seeded your profile.** Parsed `resume.pdf` into
+  structured JSON (education, experience, projects, publications,
+  skills, awards, certifications) and inserted it as the one `profile`
+  row, plus an `is_base=true` `resume_versions` row that per-job
+  tailored versions will diff against going forward. The structured
+  copy with your phone/email (`profile.seed.json`) is gitignored and
+  lives only in Supabase, not in git — `profile.seed.example.json`
+  (placeholder data) is committed instead so the shape is documented
+  without adding another copy of your PII to repo history. Note:
+  `resume.pdf` itself was already committed to this repo in an earlier
+  session, before this repo-visibility question was raised — see the
+  still-open repo-visibility item below.
 
 ## 2026-08-11
 
