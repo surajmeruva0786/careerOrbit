@@ -68,6 +68,13 @@ only — the user sends messages themselves.
   third ToS-safe source per PLAN.md §5.2. Parses public job-board RSS
   feeds (We Work Remotely, curl-verified) with fast-xml-parser.
   Verified live: 1 real, currently-open internship posting returned.
+- **Step 9/28 — Sourcing orchestrator.** `src/lib/sourcing/orchestrator.ts`
+  runs all three connectors in parallel, dedupes by `(source, source_id)`,
+  upserts into `jobs`. Verified today: 58 real postings fetched, 58
+  unique after dedupe. The DB write itself needs
+  `SUPABASE_SERVICE_ROLE_KEY`, which the Supabase MCP tools don't
+  expose (by design) — needs the user to fill it in from the Supabase
+  dashboard before the pipeline can write real data end to end.
 
 ## 2026-08-11
 
