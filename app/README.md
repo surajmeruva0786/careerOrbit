@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CareerOrbit — dashboard app
 
-## Getting Started
+Sourcing → ranking → tailoring → review → submission → email-Q&A
+pipeline for internship applications. See [../docs/PLAN.md](../docs/PLAN.md)
+for the full architecture and [../docs/CHANGELOG.md](../docs/CHANGELOG.md)
+for build history.
 
-First, run the development server:
+**What this does automatically vs. what it doesn't:** sources postings
+from official ATS APIs (Greenhouse, Lever) and RSS feeds, ranks and
+tailors your resume with Claude, and lets you approve each one from a
+dashboard. It submits directly via API where a public one exists;
+everywhere else (including LinkedIn) it prepares the materials and
+hands you a one-click link — it does not log into LinkedIn or send
+messages/applications on your behalf. See docs/conversation-log.md
+Turn 4 for why.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Setup
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. `npm install`
+2. Copy `.env.example` to `.env.local` and fill in:
+   - `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` — already
+     set for the live `careerorbit` Supabase project (ap-south-1).
+   - `SUPABASE_SERVICE_ROLE_KEY` — from Supabase dashboard → Project
+     Settings → API. Needed for any server-side write (sourcing,
+     ranking, seeding). Not committed anywhere; get it yourself.
+   - `ANTHROPIC_API_KEY` — from console.anthropic.com. Used server-side
+     for ranking and resume tailoring.
+   - `DASHBOARD_PASSWORD` — picks the password that gates the review
+     dashboard (step 19).
+3. (Once, or whenever your resume changes) copy
+   `src/data/profile.seed.example.json` to `src/data/profile.seed.json`,
+   fill in your real details (gitignored — never committed), then:
+   ```bash
+   node --env-file=.env.local scripts/seed-profile.mjs
+   ```
+4. `npm run dev` and open http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploying
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployed to Vercel (see step 27 in the changelog). Set the same four
+env vars in the Vercel project settings — they are not synced from
+`.env.local` automatically.
