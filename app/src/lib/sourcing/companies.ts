@@ -24,4 +24,4 @@ export const GREENHOUSE_BOARDS = [
   "cloudflare",
 ];
 
-export const LEVER_BOARDS: string[] = [];
+export const LEVER_BOARDS = ["palantir", "plaid", "lever", "carbonhealth", "ro", "whoop"];
