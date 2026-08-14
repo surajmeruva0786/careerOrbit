@@ -1,10 +1,14 @@
 import type { ApplicationRow } from "@/lib/applications";
 import { ResumeDiff } from "./ResumeDiff";
+import { approveApplication, rejectApplication } from "@/app/actions";
+
+const REVIEWABLE_STATUSES = ["pending_review", "tailored", "ranked"];
 
 export function ApplicationCard({ application }: { application: ApplicationRow }) {
   const job = application.jobs;
   const ranking = application.rankings;
   const resume = application.resume_versions;
+  const reviewable = REVIEWABLE_STATUSES.includes(application.status);
 
   return (
     <div className="border border-black/10 dark:border-white/15 rounded-lg p-4 flex flex-col gap-2">
@@ -40,6 +44,26 @@ export function ApplicationCard({ application }: { application: ApplicationRow }
           diff={resume.diff_from_base}
           coverNote={typeof resume.content?.cover_note === "string" ? resume.content.cover_note : undefined}
         />
+      )}
+      {reviewable && (
+        <div className="flex items-center gap-2 pt-1">
+          <form action={approveApplication.bind(null, application.id)}>
+            <button
+              type="submit"
+              className="text-sm rounded-md bg-emerald-600 text-white px-3 py-1.5 hover:bg-emerald-700"
+            >
+              Approve
+            </button>
+          </form>
+          <form action={rejectApplication.bind(null, application.id)}>
+            <button
+              type="submit"
+              className="text-sm rounded-md border border-black/15 dark:border-white/20 px-3 py-1.5 opacity-80 hover:opacity-100"
+            >
+              Reject
+            </button>
+          </form>
+        </div>
       )}
     </div>
   );
