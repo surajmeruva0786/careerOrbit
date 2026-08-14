@@ -177,6 +177,15 @@ only — the user sends messages themselves.
   `CRON_SECRET` bearer token as the other cron routes. Scheduled
   `email-ask` before `submit` in `vercel.json` so unanswered
   applications don't reach the submission stage.
+- **Step 23/28 — Surface awaiting_reply + submission status in the
+  dashboard.** `awaiting_reply` applications previously landed in the
+  "History" section, reading as settled when they're actually blocked
+  on you emailing an answer — gave them their own section, and
+  `ApplicationCard` now lists each open `email_threads` question
+  inline (`getApplicationsByStatus` joins `email_threads`). Approved
+  cards now say plainly that real submission is dry-run only (step 19)
+  or, for manual-only sources, that there's no API to submit through
+  at all — instead of implying something was actually sent.
 
 ## 2026-08-11
 
