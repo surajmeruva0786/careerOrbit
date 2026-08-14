@@ -1,8 +1,10 @@
 import type { ApplicationRow } from "@/lib/applications";
+import { ResumeDiff } from "./ResumeDiff";
 
 export function ApplicationCard({ application }: { application: ApplicationRow }) {
   const job = application.jobs;
   const ranking = application.rankings;
+  const resume = application.resume_versions;
 
   return (
     <div className="border border-black/10 dark:border-white/15 rounded-lg p-4 flex flex-col gap-2">
@@ -33,6 +35,12 @@ export function ApplicationCard({ application }: { application: ApplicationRow }
         )}
         <span className="opacity-50">status: {application.status}</span>
       </div>
+      {resume && (
+        <ResumeDiff
+          diff={resume.diff_from_base}
+          coverNote={typeof resume.content?.cover_note === "string" ? resume.content.cover_note : undefined}
+        />
+      )}
     </div>
   );
 }
