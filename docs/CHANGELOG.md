@@ -17,6 +17,13 @@ only — the user sends messages themselves.
 - **Step 1/28 — Scaffolded the dashboard app.** `app/` is a Next.js
   (TypeScript, App Router, Tailwind) project, deployable to Vercel.
   This will become the review dashboard from PLAN.md §3.
+- **Step 2/28 — Provisioned Supabase.** Created the `careerorbit`
+  project (ap-south-1, free tier, $0/mo) in the `orbissystems` org —
+  answers PLAN.md open decision #5. Added `src/lib/supabase/client.ts`
+  (browser, anon key, RLS-bound) and `server.ts` (service_role key,
+  server-only). `.env.example` documents every secret the app needs;
+  `SUPABASE_SERVICE_ROLE_KEY` and `ANTHROPIC_API_KEY` still need to be
+  filled in by hand (not something I can provision on your behalf).
 
 ## 2026-08-11
 
