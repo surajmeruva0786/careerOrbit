@@ -3,6 +3,7 @@
     { "path": "/api/cron/source", "schedule": "0 13 * * *" },
     { "path": "/api/cron/rank", "schedule": "30 13 * * *" },
     { "path": "/api/cron/tailor", "schedule": "50 13 * * *" },
-    { "path": "/api/cron/submit", "schedule": "10 14 * * *" }
+    { "path": "/api/cron/email-ask", "schedule": "5 14 * * *" },
+    { "path": "/api/cron/submit", "schedule": "15 14 * * *" }
   ]
 }
