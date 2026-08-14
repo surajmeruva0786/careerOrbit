@@ -26,7 +26,9 @@ Turn 4 for why.
    - `ANTHROPIC_API_KEY` — from console.anthropic.com. Used server-side
      for ranking and resume tailoring.
    - `DASHBOARD_PASSWORD` — picks the password that gates the review
-     dashboard (step 19).
+     dashboard (HTTP Basic Auth, see `src/proxy.ts`). If unset, the
+     dashboard is reachable with no auth — fine for local dev, but set
+     this before deploying anywhere public.
 3. (Once, or whenever your resume changes) copy
    `src/data/profile.seed.example.json` to `src/data/profile.seed.json`,
    fill in your real details (gitignored — never committed), then:
@@ -37,6 +39,6 @@ Turn 4 for why.
 
 ## Deploying
 
-Deployed to Vercel (see step 27 in the changelog). Set the same four
-env vars in the Vercel project settings — they are not synced from
+Deployed to Vercel (see docs/CHANGELOG.md for when). Set the same env
+vars in the Vercel project settings — they are not synced from
 `.env.local` automatically.
