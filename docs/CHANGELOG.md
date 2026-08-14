@@ -42,6 +42,14 @@ only — the user sends messages themselves.
   `resume.pdf` itself was already committed to this repo in an earlier
   session, before this repo-visibility question was raised — see the
   still-open repo-visibility item below.
+- **Confirmed via GitHub API: this repo is still public**, and now
+  contains `resume.pdf` with phone/email. I have no GitHub token/CLI
+  access in this environment to change it — **user action needed**:
+  Settings → General → Danger Zone → Change visibility to private.
+- **Step 5/28 — Setup docs.** Added a top-level `README.md` pointing at
+  `docs/` and `app/`, and rewrote `app/README.md` with real setup
+  steps (env vars, profile seeding, dev server) in place of the
+  `create-next-app` boilerplate.
 
 ## 2026-08-11
 
