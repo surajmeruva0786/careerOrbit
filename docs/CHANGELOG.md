@@ -75,6 +75,10 @@ only — the user sends messages themselves.
   `SUPABASE_SERVICE_ROLE_KEY`, which the Supabase MCP tools don't
   expose (by design) — needs the user to fill it in from the Supabase
   dashboard before the pipeline can write real data end to end.
+- **Step 10/28 — Scheduled sourcing.** `/api/cron/source` calls
+  `runSourcing()`, gated by a `CRON_SECRET` bearer check. `vercel.json`
+  schedules it daily (Hobby plan caps crons at once/day; tighten later
+  on a paid plan). `next build` passes and registers the route.
 
 ## 2026-08-11
 
