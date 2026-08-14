@@ -79,6 +79,12 @@ only — the user sends messages themselves.
   `runSourcing()`, gated by a `CRON_SECRET` bearer check. `vercel.json`
   schedules it daily (Hobby plan caps crons at once/day; tighten later
   on a paid plan). `next build` passes and registers the route.
+- **Step 11/28 — Claude fit/friction scorer.** `src/lib/ranking/score.ts`
+  forces a `submit_score` tool call so Claude always returns structured
+  `fit_score`/`friction_score`/`reasoning` (per PLAN.md §6: fit on real
+  domain/seniority overlap, friction inferred only from posting
+  language). Type-checks and builds clean; not yet run against the
+  live API — needs `ANTHROPIC_API_KEY`.
 
 ## 2026-08-11
 
