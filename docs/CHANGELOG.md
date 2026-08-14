@@ -101,6 +101,14 @@ only — the user sends messages themselves.
   the model's output introduces an org/project name not present in the
   base resume, enforcing the "never fabricate" rule in code rather than
   trusting the prompt alone.
+- **Step 15/28 — Versioned resume diff storage.** `diffResume()`
+  produces a structural diff (ordering + per-entry bullet changes) for
+  the dashboard. `runTailoring()` tailors every `ranked` application,
+  stores the result + diff as a `resume_versions` row, links it, and
+  advances status to `tailored`. Wired to `/api/cron/tailor`, scheduled
+  after ranking. Note: Vercel's exact cron-count limit on the Hobby
+  plan is unconfirmed from here — if step 27's deploy hits it, crons
+  will get consolidated then.
 
 ## 2026-08-11
 
