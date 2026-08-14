@@ -113,6 +113,10 @@ only — the user sends messages themselves.
   statically prerendered) lists applications needing review sorted by
   fit_score, plus a collapsed history section. `getApplicationsByStatus()`
   joins jobs/rankings/resume_versions in one query.
+- **Step 17/28 — Resume diff viewer.** Collapsible `ResumeDiff`
+  component shows per-entry bullet changes (struck-through before,
+  highlighted after), reordering, and the generated cover note, so you
+  can see exactly what changed before approving.
 
 ## 2026-08-11
 
