@@ -137,6 +137,18 @@ only — the user sends messages themselves.
   company, user's name) and is deferred to its own later step rather
   than folded in here. `submission_method` gets set so a payload isn't
   rebuilt/relogged on every cron tick.
+- **Step 20/28 — Dashboard auth gate.** `DASHBOARD_PASSWORD` had been
+  documented in `.env.example` since an earlier session but never
+  wired up — the dashboard (resume PII + approve/reject actions) was
+  reachable with no auth at all, on a repo that's currently public.
+  Added `app/src/proxy.ts`: HTTP Basic Auth in front of every route
+  except `/api/cron/*` (which keeps its own `CRON_SECRET` bearer
+  check). Verified against a real dev server — no/wrong credentials
+  get `401`, correct credentials pass through. Built as `proxy.ts`,
+  not `middleware.ts`: Next.js 16 renamed/deprecated the middleware
+  file convention in favor of `proxy` (confirmed by reading
+  `node_modules/next/dist/docs`, per this repo's `AGENTS.md`) — the
+  old name still worked but printed a migration warning at build.
 
 ## 2026-08-11
 
