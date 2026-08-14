@@ -149,6 +149,13 @@ only — the user sends messages themselves.
   file convention in favor of `proxy` (confirmed by reading
   `node_modules/next/dist/docs`, per this repo's `AGENTS.md`) — the
   old name still worked but printed a migration warning at build.
+- **Step 21/28 — Missing-field detection (Phase 3 start).**
+  `src/lib/emailqa/detect.ts`, `detectMissingFields()`: same forced
+  tool-call pattern as ranking/tailoring. Compares a job posting's
+  actual text against the candidate's stored `screening_answers` and
+  returns only questions the posting genuinely asks and isn't already
+  answered — per PLAN.md §8, every outbound question must be real and
+  specific, never a generic form dump. Not wired into a pipeline yet.
 
 ## 2026-08-11
 
