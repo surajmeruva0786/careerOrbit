@@ -24,6 +24,12 @@ only — the user sends messages themselves.
   server-only). `.env.example` documents every secret the app needs;
   `SUPABASE_SERVICE_ROLE_KEY` and `ANTHROPIC_API_KEY` still need to be
   filled in by hand (not something I can provision on your behalf).
+- **Step 3/28 — Applied the DB schema.** All 7 tables from PLAN.md §4
+  (`profile`, `jobs`, `rankings`, `applications`, `resume_versions`,
+  `application_fields`, `email_threads`) are live with RLS enabled and
+  no anon policies — only the server can touch them. Migration is
+  checked into `app/supabase/migrations/0001_init.sql` so it's
+  reproducible outside this session.
 
 ## 2026-08-11
 
