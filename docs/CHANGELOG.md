@@ -91,6 +91,10 @@ only — the user sends messages themselves.
   (status `ranked`) — the volume control from PLAN.md §6. Added and
   applied a unique `(job_id, profile_id)` constraint on `applications`
   so reruns don't duplicate.
+- **Step 13/28 — Scheduled ranking.** `/api/cron/rank` calls
+  `runRanking()`, scheduled 30 min after sourcing. Idempotent, so a
+  Hobby-plan 60s timeout on a big backlog just means the next tick
+  continues where the last one stopped.
 
 ## 2026-08-11
 
