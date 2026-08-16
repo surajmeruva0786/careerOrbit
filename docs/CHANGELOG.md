@@ -209,6 +209,43 @@ only — the user sends messages themselves.
   boards isn't buildable without a per-company key this system
   doesn't have — documented honestly rather than shipping a fake
   integration.
+- **Step 26/28 — Deploy attempt, blocked pending your go-ahead.**
+  Tried linking a new Vercel project to this GitHub repo (would
+  auto-deploy on every future push, per PLAN.md's original intent for
+  this step) — the action was blocked by the coding environment's own
+  permission classifier: spinning up a new live cloud resource under
+  your account is exactly the kind of hard-to-reverse, shared-system
+  action that needs your explicit confirmation rather than being
+  pushed through autonomously. **Needs your decision**: say the word
+  and I'll create the Vercel project (root directory `app`) and it'll
+  auto-deploy from `main` going forward. Note it won't be *functional*
+  immediately either way — `SUPABASE_SERVICE_ROLE_KEY`,
+  `ANTHROPIC_API_KEY`, `DASHBOARD_PASSWORD`, and `CRON_SECRET` all
+  still need to be set in the Vercel project settings by hand (same
+  gap that's existed locally since step 2/9 — I don't have and can't
+  generate any of these on your behalf).
+
+### Where this leaves things
+
+Everything gated only on code is built and pushed: sourcing → ranking
+→ tailoring → review dashboard (with auth) → dry-run submission
+staging → email Q&A queueing/resolution → manual-assist fallback for
+every source. What's left is entirely things only you can do:
+
+1. **Repo visibility** (step 24) — make this repo private, or approve
+   a history rewrite to purge `resume.pdf`.
+2. **Fill in real secrets** — `SUPABASE_SERVICE_ROLE_KEY`,
+   `ANTHROPIC_API_KEY`, `DASHBOARD_PASSWORD`, `CRON_SECRET` in
+   `.env.local` (local) and/or Vercel project settings (deployed).
+3. **Seed your real profile** — copy `profile.seed.example.json` to
+   `profile.seed.json`, fill in real details, run
+   `scripts/seed-profile.mjs`.
+4. **Deploy** (step 26) — say go-ahead and I'll link the Vercel
+   project; auto-deploys from `main` after that.
+5. **Operate the email loop** (step 22) — periodically ask me (or a
+   scheduled agent) to run `/api/cron/email-ask` and check `pending`;
+   I draft/send via Gmail MCP and resolve replies through
+   `/api/admin/resolve-email-field`.
 
 ## 2026-08-11
 
