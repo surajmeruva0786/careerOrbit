@@ -1,6 +1,6 @@
 # CareerOrbit — System Plan
 
-Status: **draft for review** — several decisions below need your sign-off before any code that actually touches job sites or sends email gets built (see [Open Decisions](#open-decisions-blocking-build) at the bottom).
+Status: **in build** (see docs/CHANGELOG.md for progress). Open decisions below are resolved as of the date noted in each; see that entry for what actually shipped vs. what changed from the original recommendation.
 
 ## 1. Goal, restated
 
@@ -38,7 +38,7 @@ Build a pipeline that:
                                                                 └────────────────┘
 ```
 
-- **Sourcing**: n8n workflows (you already run n8n for Orbis Systems, so this reuses skills you have) polling job sources on a schedule.
+- **Sourcing**: originally planned as n8n workflows; built instead as Vercel Cron hitting `/api/cron/source` (step 10) — no extra service to run, same schedule-a-poll idea.
 - **Ranking**: an LLM (Claude) scores each posting against your structured resume profile, with a numeric fit score + reasoning + an estimated "friction" score (how many rounds/how automatable the process is, inferred from posting text — e.g. "Easy Apply", "no OA mentioned", company size).
 - **Tailoring**: Claude rewrites resume bullet emphasis and generates a cover note per posting, from your real experience only.
 - **Review Queue**: a small Next.js dashboard (deployable on Vercel) listing every candidate application with a diff of the tailored resume, so you approve/reject before anything is submitted. This is the recommended default — see Open Decisions.
@@ -97,7 +97,7 @@ Recommendation: **(b)**, since you already run n8n — but it needs you to provi
 ## 10. Build phases
 
 - **Phase 0 — Foundation**: parse `resume.pdf` → structured profile in Supabase; repo scaffold; this documentation.
-- **Phase 1 — Sourcing + ranking (low-risk sources only)**: Greenhouse/Lever APIs + RSS feeds → n8n → Supabase; ranking job in Claude.
+- **Phase 1 — Sourcing + ranking (low-risk sources only)**: Greenhouse/Lever APIs + RSS feeds → Vercel Cron → Supabase; ranking job in Claude.
 - **Phase 2 — Tailoring + review dashboard**: Next.js/Vercel dashboard showing ranked jobs and tailored-resume diffs; approve/reject actions.
 - **Phase 3 — Email Q&A loop**: wire up whichever option from §8 you choose; profile auto-updates from replies.
 - **Phase 4 — Submission automation**: API-based submission first (lowest risk), then opt-in Playwright automation for everything else, still behind the approval gate.
@@ -114,12 +114,14 @@ Recommendation: **(b)**, since you already run n8n — but it needs you to provi
 | Email spoofing/phishing look | Questions always reference a specific application ID; sent from a clearly-labeled sender if using option (c) in §8 |
 | Over-applying hurts your reputation with recruiters | Fit-score threshold caps volume; friction/fit scoring favors genuine matches over spray-and-pray |
 
-## Open decisions (blocking build)
+## Open decisions
 
-These need your call before Phase 1+ code gets written:
+1. **Repo visibility** — still **public** as of 2026-08-16 (re-confirmed via GitHub API in changelog step 24). `resume.pdf` (real phone/email) was committed in an earlier session; it's now `.gitignore`d going forward (step 24) but still sits in existing git history. **Still needs your action**: make the repo private (recommended — single click, GitHub Settings → General → Danger Zone), or explicitly approve a git history rewrite + force-push to purge it (destructive, not done without sign-off).
+2. **Email sending mechanism** — landed on **(a) draft-and-notify**, not the originally-recommended (b): the deployed app holds no Gmail credentials at all (a personal-inbox OAuth grant isn't worth storing in a serverless app on a still-public repo), so `/api/cron/email-ask` (step 22) only detects questions and queues them in Supabase. Actually drafting/sending and parsing replies is done by the operator (Claude Code, using Gmail MCP tools that need no extra provisioning) rather than by n8n. See CHANGELOG step 22.
+3. **Approval gate** — confirmed: review-and-approve before submit, for every source, indefinitely. Additionally, live submission itself was scoped back further than originally planned — see the submission-worker note below.
+4. **Sourcing scope for v1** — Greenhouse/Lever/RSS only, as recommended. LinkedIn/Workday scraping was never added; LinkedIn support is a personalized-note generator only, per the Turn 4 decision in conversation-log.md.
+5. **Supabase project** — new project provisioned (`careerorbit`, ap-south-1), step 2.
 
-1. **Repo visibility** — this repo is currently **public** on GitHub. It's about to contain your resume and profile data. Make it private, or keep PII out of git entirely (e.g., `.gitignore` the resume/profile and store them only in Supabase)?
-2. **Email sending mechanism** — pick (a), (b), or (c) from §8. (b) needs an n8n Gmail/SMTP credential grant from you.
-3. **Approval gate** — confirm the default of "review-and-approve before submit" for the first phase, or do you want to skip straight to unattended auto-submit for low-risk (API-based) sources?
-4. **Sourcing scope for v1** — start with Greenhouse/Lever/RSS only (my recommendation), or do you want LinkedIn/Workday scraping in scope from day one despite the higher ban risk?
-5. **Supabase project** — do you have one already, or should this plan assume a new project provisioned for CareerOrbit?
+### Submission worker reality check (added 2026-08-16, after step 19)
+
+§9 assumed Greenhouse/Lever expose a public POST-to-apply endpoint the same way they expose public GET job listings. On closer look, they don't: submitting an application through either API requires a per-company opt-in/API key that this system doesn't have and can't provision on its own. So "Direct API POST" isn't currently buildable as unattended automation for arbitrary boards — building it anyway would mean fabricating an integration that doesn't actually work, which this project's own "never fabricate" principle rules out. Step 19 implements the payload-construction/staging half only (dry-run, logged, never POSTed); real submission for every source currently means **you apply by hand** via the posting link the dashboard already surfaces, with the tailored resume/cover note/answers all prepared for you. Revisit if a specific target company turns out to offer real API-apply access.
