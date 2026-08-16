@@ -186,6 +186,17 @@ only — the user sends messages themselves.
   cards now say plainly that real submission is dry-run only (step 19)
   or, for manual-only sources, that there's no API to submit through
   at all — instead of implying something was actually sent.
+- **Step 24/28 — Stopped tracking `resume.pdf`.** Re-confirmed via the
+  GitHub API: this repo is still **public**, and `resume.pdf` (real
+  phone/email) has been sitting in its git history since step 4,
+  never resolved. Added a root `.gitignore` and `git rm --cached` it —
+  this stops further writes but does **not** purge it from existing
+  history. Full fix needs one of two things from you, neither of
+  which I can do autonomously: make the repo private (single click,
+  GitHub Settings → General → Danger Zone — recommended, no side
+  effects), or a git history rewrite + force-push (destructive,
+  rewrites shared history, needs explicit sign-off before I'd ever run
+  it).
 
 ## 2026-08-11
 
