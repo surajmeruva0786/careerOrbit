@@ -1,0 +1,7 @@
+# Real resume PII (phone/email) -- was committed to git history in an
+# earlier session before this repo's public-visibility risk was raised
+# (see docs/CHANGELOG.md step 4 and this entry). Untracking it here
+# stops further writes but does NOT remove it from existing history --
+# that needs either making the repo private or a history rewrite,
+# both of which need your explicit go-ahead (see CHANGELOG).
+resume.pdf
