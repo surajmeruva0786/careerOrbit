@@ -197,6 +197,18 @@ only — the user sends messages themselves.
   effects), or a git history rewrite + force-push (destructive,
   rewrites shared history, needs explicit sign-off before I'd ever run
   it).
+- **Step 25/28 — Reconciled PLAN.md's open decisions with reality.**
+  The list hadn't been touched since Phase 0. Marked repo visibility
+  still-open (needs your action), email mechanism as landed-on-(a)
+  (not the originally-recommended (b), and why), approval gate and
+  sourcing scope as confirmed, Supabase as done. Fixed two stale n8n
+  references — sourcing was built on Vercel Cron, not n8n. Added a
+  submission-worker reality check: Greenhouse/Lever don't actually
+  expose a public POST-to-apply endpoint the way they expose public
+  GET listings, so real unattended API submission for arbitrary
+  boards isn't buildable without a per-company key this system
+  doesn't have — documented honestly rather than shipping a fake
+  integration.
 
 ## 2026-08-11
 
